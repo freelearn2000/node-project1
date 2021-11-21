@@ -86,5 +86,5 @@ server.use( (error: any, req: any, res: Response, next: any) => {
 });
 
 server.listen( PORT, ( ) => {
-    logger.info(`Server running at ${PORT}`);
+    logger.info(`Server running at ${PORT}...`);
 });
