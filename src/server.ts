@@ -5,6 +5,7 @@ import logger from './shared/logger';
 import express, {Response} from 'express';
 import path from 'path';
 import routerNews from './routes/v1/news.route';
+import routerWeather from './routes/v1/weather.route'
 import routerUsers from './routes/v1/users.route';
 import routerAuthV1 from './routes/v1/auth.route';
 import routerAuthV2 from './routes/v2/auth.route';
@@ -57,6 +58,7 @@ server.use( `${API_PREFIX_V1}/auth`, routerAuthV1 );
 server.use( `${API_PREFIX_V2}/auth`, routerAuthV2 );
 server.use( `${API_PREFIX_V1}/news`, routerNews );
 server.use( `${API_PREFIX_V1}/users`, routerUsers );
+server.use( `${API_PREFIX_V1}/weather`, routerWeather );
 
 // Handle all API's (not handled by routes)
 server.all( '/api/*', (req, res ) => {
