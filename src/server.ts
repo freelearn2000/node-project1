@@ -4,7 +4,6 @@ import logger from './shared/logger';
 
 import express, {Response} from 'express';
 import path from 'path';
-import routerProducts from './routes/v1/products.route';
 import routerNews from './routes/v1/news.route';
 import routerUsers from './routes/v1/users.route';
 import routerAuthV1 from './routes/v1/auth.route';
@@ -13,6 +12,8 @@ import { createConnection } from 'typeorm';
 import config from './typeormconfig';
 import responseMiddleware from './middlewares/response.middleware';
 import loggingMiddleware from './middlewares/logging.middleware';
+import { NotImplementedError } from './shared/common';
+import { ApiNotImplementedError } from './shared/common';
 
 
 const API_PREFIX_V1 = `/api/v1`;
@@ -54,25 +55,22 @@ server.use( responseMiddleware() );
 // Add Routes
 server.use( `${API_PREFIX_V1}/auth`, routerAuthV1 );
 server.use( `${API_PREFIX_V2}/auth`, routerAuthV2 );
-server.use( `${API_PREFIX_V1}/products`, routerProducts );
 server.use( `${API_PREFIX_V1}/news`, routerNews );
 server.use( `${API_PREFIX_V1}/users`, routerUsers );
 
-// Handle All API's (not handled by Routes)
-server.all( `/api/*`, (req, res) => {
-    res.status( 400 ).send( `API ${req.method} on ${req.path} not implemented!` );
-    logger.error( `400 API ${req.method} on ${req.path} not implemented!` );
+// Handle all API's (not handled by routes)
+server.all( '/api/*', (req, res ) => {
+    throw new ApiNotImplementedError( `API ${req.method} on ${req.path} not implemented!`, `Main-Bad api request` );
 });
 
-// Handle GET requests not handled by Routes, Send React App to Client
-server.get( `*`, (req, res) => {
-    res.sendFile( path.resolve(__dirname, `../../express/src/client/index.html`) );
+// Handle GET requests not handled by Routes, send React App to Client
+server.get( '*', (req, res) => {
+    res.sendFile( path.resolve(__dirname, '../../express/src/client/index.html') );
 });
 
-// Handle All other (POST, PATCH, DELETE) requests not handled by Routes
-server.all( `*`, (req, res) => {
-    res.status( 400 ).send( `Not implemented!` );
-    logger.error( `400 Not implemented!` );
+// Handle All other (POST, PATCH, DELETE) requets not handled by Routes
+server.all( '*', (req, res ) => {
+    throw new NotImplementedError( `Not implemented`, `Main-Bad request` );
 });
 
 // Global error handler
