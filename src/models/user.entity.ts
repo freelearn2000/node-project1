@@ -1,49 +1,53 @@
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString, Matches } from 'class-validator'
 
 
-@Entity()
+@Entity( )
 export class User {
 
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn( )
     id?: number;
 
-    @Column()
+    @Column( )
     name?: string;
 
-    @Column({unique:true})
+    @Column( {unique:true} )
     email?: string;
 
-    @Column()
+    @Column( )
     password?: string;
 
-    @Column()
+    @Column( )
     address?: string;
 }
 
-export class UserValidator {
+export  class UserValidator {
 
-    @IsString( {message: `Name should be a string`} )
-    @IsNotEmpty( {message: `Name should be defined`} )
+    @Matches( /^[a-zA-Z\-]+$/, {message: 'Name should contain alphabets only'} )
+    @IsString( {message: 'Name should be a string'} )
+    @IsNotEmpty( {message: 'Name should be defined'} )
     name?: string;
 
-    @IsEmail( {}, {message: `Email is not valid`} )
-    @IsNotEmpty( {message: `Email should be defined`} )
+    @IsEmail( {}, {message: 'Email is not valid'} )
+    @IsNotEmpty( {message: 'Email should be defined'} )
     email?: string;
 
-    @IsNotEmpty( {message: `Password should be defined`} )
+    @Matches( /(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {message: 'password must contain atleast eight characters including one uppercase letter, one lowercase letter, and one number or special character'} )
+    @IsNotEmpty( {message: 'Password should be defined'} )
     password?: string;
 
-    @IsNotEmpty( {message: `Address should be defined`} )
+    @IsString( {message: 'Address should be a string'} )
+    @IsNotEmpty( {message: 'Address should be defined'} )
     address?: string;
-}
+}  
 
-export class AuthUserValidator {
-
-    @IsEmail( {}, {message: `Email is not valid`} )
-    @IsNotEmpty( {message: `Email should be defined`} )
+export  class AuthUserValidator {
+    
+    @IsEmail( {}, {message: 'Email is not valid'} )
+    @IsNotEmpty( {message: 'Email should be defined'} )
     email?: string;
 
-    @IsNotEmpty( {message: `Password should be defined`} )
+    @IsNotEmpty( {message: 'Password should be defined'} )
     password?: string;
-}
+
+}  
