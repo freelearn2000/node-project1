@@ -8,6 +8,7 @@ import routerNews from './routes/v1/news.route';
 import routerUsers from './routes/v1/users.route';
 import routerAuthV1 from './routes/v1/auth.route';
 import routerAuthV2 from './routes/v2/auth.route';
+import routerLocations from './routes/v1/locations.route';
 import { createConnection } from 'typeorm';
 import config from './typeormconfig';
 import responseMiddleware from './middlewares/response.middleware';
@@ -57,6 +58,7 @@ server.use( `${API_PREFIX_V1}/auth`, routerAuthV1 );
 server.use( `${API_PREFIX_V2}/auth`, routerAuthV2 );
 server.use( `${API_PREFIX_V1}/news`, routerNews );
 server.use( `${API_PREFIX_V1}/users`, routerUsers );
+server.use( `${API_PREFIX_V1}/locations`, routerLocations );
 
 // Handle all API's (not handled by routes)
 server.all( '/api/*', (req, res ) => {
