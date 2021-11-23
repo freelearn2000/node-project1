@@ -5,8 +5,12 @@ import logger from './shared/logger';
 import express, {Response} from 'express';
 import path from 'path';
 import routerNews from './routes/v1/news.route';
+import routerWeather from './routes/v1/weather.route'
 import routerUsers from './routes/v1/users.route';
 import routerAuthV1 from './routes/v1/auth.route';
+import routerProjects from './routes/v1/projects.route';
+import routerProducts from './routes/v1/products.route';
+import routerBooks from './routes/v1/books.route';
 import routerAuthV2 from './routes/v2/auth.route';
 import routerLocations from './routes/v1/locations.route';
 import { createConnection } from 'typeorm';
@@ -57,8 +61,15 @@ server.use( responseMiddleware() );
 server.use( `${API_PREFIX_V1}/auth`, routerAuthV1 );
 server.use( `${API_PREFIX_V2}/auth`, routerAuthV2 );
 server.use( `${API_PREFIX_V1}/news`, routerNews );
+server.use( `${API_PREFIX_V1}/projects`, routerProjects );
+server.use( `${API_PREFIX_V1}/products`, routerProducts );
 server.use( `${API_PREFIX_V1}/users`, routerUsers );
+<<<<<<< HEAD
 server.use( `${API_PREFIX_V1}/locations`, routerLocations );
+=======
+server.use( `${API_PREFIX_V1}/weather`, routerWeather );
+server.use( `${API_PREFIX_V1}/books`, routerBooks );
+>>>>>>> c22cf4498b2104ca4946b0decad235bc327f70c1
 
 // Handle all API's (not handled by routes)
 server.all( '/api/*', (req, res ) => {
