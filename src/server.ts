@@ -10,6 +10,7 @@ import routerUsers from './routes/v1/users.route';
 import routerAuthV1 from './routes/v1/auth.route';
 import routerProjects from './routes/v1/projects.route';
 import routerProducts from './routes/v1/products.route';
+import routerBooks from './routes/v1/books.route';
 import routerAuthV2 from './routes/v2/auth.route';
 import { createConnection } from 'typeorm';
 import config from './typeormconfig';
@@ -63,6 +64,7 @@ server.use( `${API_PREFIX_V1}/projects`, routerProjects );
 server.use( `${API_PREFIX_V1}/products`, routerProducts );
 server.use( `${API_PREFIX_V1}/users`, routerUsers );
 server.use( `${API_PREFIX_V1}/weather`, routerWeather );
+server.use( `${API_PREFIX_V1}/books`, routerBooks );
 
 // Handle all API's (not handled by routes)
 server.all( '/api/*', (req, res ) => {
