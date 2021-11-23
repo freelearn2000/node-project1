@@ -1,41 +1,41 @@
-import { Request, Response, NextFunction, RequestHandler } from 'express';
-import { validate, ValidationError } from 'class-validator';
-import { plainToClass } from 'class-transformer';
+import { Request, Response, NextFunction } from 'express';
+import { validate, ValidationError } from  'class-validator'
+import { plainToClass } from  'class-transformer'
 import { DataValidationError } from '../shared/common';
 
 
-const validationMiddleware = ( validator: any, options = {} ): RequestHandler => {
+const valMiddleware = ( validator: any, options = {} ) => {
 
-    return ( req: Request, res: Response, next: NextFunction ) => {
+    return ( req: Request,res: Response, next: NextFunction )  =>  {
 
-        validate( plainToClass(validator, req.body), options )
-            .then( (errors: ValidationError[]) => {
+        validate( plainToClass(validator, req.body), {...options, forbidNonWhitelisted: true, whitelist: true} )
+            .then( (errors: ValidationError[] ) => {
 
                 if ( errors.length ) {
 
-                    const messages: any = errors.map( 
-                        (error: ValidationError) => {
-    
+                    const messages: any = errors.map(
+                        ( error: ValidationError ) => {
+
                             const constraints: any = error.constraints;
-    
-                            return Object.values(constraints).join(` ; `);
+                            return Object.values( constraints ).join(' ; ');
                         }
-                    ).join(` ; `);
+                    ).join(' ; ');
 
                     // Validation failed!
-                    next( new DataValidationError(messages, `validation.middleware->validationMiddleware`) );
-
+                    next( new DataValidationError( messages, 'val.middleware->valMiddleware') );
+                
                 } else {
 
-                    // Validation succeeded, move to nect middleware
+                    // Validation succeeded, move to next middleware
                     next( );
-                }
-               
-            } )
-            .catch( error => {
-                next( new DataValidationError(error.message, `validation.middleware->validationMiddleware`) );
-            });
+            }
+
+        } )
+        .catch( error => {
+            next( new DataValidationError( error.message, 'val.middleware->valMiddleware') );
+        });
     }
 }
-
-export default validationMiddleware;
+            
+        
+export default valMiddleware;
