@@ -64,12 +64,9 @@ server.use( `${API_PREFIX_V1}/news`, routerNews );
 server.use( `${API_PREFIX_V1}/projects`, routerProjects );
 server.use( `${API_PREFIX_V1}/products`, routerProducts );
 server.use( `${API_PREFIX_V1}/users`, routerUsers );
-<<<<<<< HEAD
 server.use( `${API_PREFIX_V1}/locations`, routerLocations );
-=======
 server.use( `${API_PREFIX_V1}/weather`, routerWeather );
 server.use( `${API_PREFIX_V1}/books`, routerBooks );
->>>>>>> c22cf4498b2104ca4946b0decad235bc327f70c1
 
 // Handle all API's (not handled by routes)
 server.all( '/api/*', (req, res ) => {
