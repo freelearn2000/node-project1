@@ -1,6 +1,6 @@
 import { getRepository } from "typeorm";
 import { Project } from "../models/project.entity";
-import { ServerError, handleAsync, fieldfilter, paging } from "../shared/common";
+import { ServerError, handleAsync, fieldFilter, paging } from "../shared/common";
 
 
 export const createResource = async( model: any ) => {
@@ -19,7 +19,7 @@ export const findResource = async( options: any ) => {
     let error = null;
     
     // 1. Partial Response (based on fields) 
-    const filter = fieldfilter( options );
+    const filter = fieldFilter( options );
 
     // 2. Pagination (based on limit & offset)
     const page = paging( options );
@@ -49,7 +49,7 @@ export const findResource = async( options: any ) => {
 
 export const findOneResource = async( id: number, options: any ) => {
     
-    const filter = fieldfilter( options );
+    const filter = fieldFilter( options );
 
     let [ resource, error ] = await handleAsync(
         getRepository( Project )
