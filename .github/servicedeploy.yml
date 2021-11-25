@@ -1,4 +1,4 @@
-name: node project
+name: nodeproject
 
 on: [push]
 
