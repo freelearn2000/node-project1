@@ -1,14 +1,14 @@
 import { getRepository } from 'typeorm';
-import { location } from '../models/location.entity';
+import { blog } from '../models/blog.entity';
 import { ServerError, handleAsync, fieldFilter, paging } from '../shared/common';
 
 
 export const createResource = async( model: any ) => {
 
-    const tempObject = getRepository( location ).create( model );
+    const tempObject = getRepository( blog ).create( model );
 
-    let [ newResource, error ] = await handleAsync( getRepository(location).save(tempObject) );  
-    if ( error ) throw new ServerError( error.message, `locations.route->createResource` );
+    let [ newResource, error ] = await handleAsync( getRepository(blog).save(tempObject) );  
+    if ( error ) throw new ServerError( error.message, `blogs.route->createResource` );
 
     return newResource;        
 }
@@ -33,7 +33,7 @@ export const findResource = async( options: any ) => {
     let order: string = options.order ? `entity.${options.order}` : `entity.id`; 
     // Partial selection
     [ allResource, error ] = await handleAsync(
-        getRepository( location )
+        getRepository( blog )
         .createQueryBuilder( `entity` )
         .select( filter )
         .where( `LOWER(entity.name) like LOWER(:name)`, { name: `%${where.toLowerCase()}%`} )
@@ -43,7 +43,7 @@ export const findResource = async( options: any ) => {
         .getMany( ) 
      );
     
-    if ( error ) throw new ServerError( error.message, `locations.route->findResource` );
+    if ( error ) throw new ServerError( error.message, `blogs.route->findResource` );
 
     return allResource;
 }
@@ -53,34 +53,34 @@ export const findOneResource = async( id: number, options: any ) => {
     const filter = fieldFilter(options);
 
     let [ resource, error ] = await handleAsync(
-        getRepository( location )
+        getRepository( blog )
         .createQueryBuilder( `entity` )
         .select( filter )
         .where( {id} )
         .getOne( )
     );
 
-    // let [ resource, error ] = await handleAsync( getRepository(location).findOne(id) );
-    if ( error ) throw new ServerError( error.message, `locations.route->findOneResource` );
+    // let [ resource, error ] = await handleAsync( getRepository(blog).findOne(id) );
+    if ( error ) throw new ServerError( error.message, `blogs.route->findOneResource` );
 
     return resource;
 }
 
 export const patchResource = async( id: number, patchModel: any ) => {
 
-    let [ , error ] = await handleAsync( getRepository(location).update(id, patchModel) );
-    if ( error ) throw new ServerError( error.message, `locations.route->patchResource` );
+    let [ , error ] = await handleAsync( getRepository(blog).update(id, patchModel) );
+    if ( error ) throw new ServerError( error.message, `blogs.route->patchResource` );
 
-    let [ resource, error2 ] = await handleAsync( getRepository(location).findOne(id) );
-    if ( error2 ) throw new ServerError( error2.message, `locations.route->patchResource` );
+    let [ resource, error2 ] = await handleAsync( getRepository(blog).findOne(id) );
+    if ( error2 ) throw new ServerError( error2.message, `blogs.route->patchResource` );
 
     return resource; 
 }
      
 export const deleteResource = async( id: number ) => {
 
-    let [ result, error ] = await handleAsync( getRepository(location).delete(id) );
-    if ( error ) throw new ServerError( error.message, `locations.route->deleteResource` );
+    let [ result, error ] = await handleAsync( getRepository(blog).delete(id) );
+    if ( error ) throw new ServerError( error.message, `blogs.route->deleteResource` );
 
     return result;
 }
