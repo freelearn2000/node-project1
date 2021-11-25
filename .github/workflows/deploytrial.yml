@@ -4,13 +4,13 @@ name: node deploy
 on: [push]
 
 env:
-  AZURE_WEBAPP_NAME: deploynode   # set this to your application's name
-  NODE_VERSION: '14.x'                # set this to the node version to use
+  AZURE_WEBAPP_NAME: deploynode   
+  NODE_VERSION: '14.x'                
 
 jobs:
   build-and-deploy:
     name: Build and Deploy
-    runs-on: linux-latest
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@main
     - name: Use Node.js ${{ env.NODE_VERSION }}
