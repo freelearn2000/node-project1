@@ -36,9 +36,9 @@ logger.info( `Environment : ${nconf.get('NODE_ENV')}` );
 // Promise (2015 - ES6)
 
 // Using Promise
-createConnection( config )
-    .then( ( ) => logger.info(`Adaptor connected...`) )
-    .catch( (error) => logger.error(`Adaptor failed to connect : `, error) );
+// createConnection( config )
+//     .then( ( ) => logger.info(`Adaptor connected...`) )
+//     .catch( (error) => logger.error(`Adaptor failed to connect : `, error) );
 
 // Using async/await
 // async function connectToPostGres( ) {
