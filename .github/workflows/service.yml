@@ -14,12 +14,7 @@ jobs:
     # checkout the repo
     - name: 'Checkout GitHub Action' 
       uses: actions/checkout@main
-   
-    - uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZUE_CREDENTIAL_1 }}
       
-    - uses: actions/checkout@master
     - name: Use Node.js ${{ env.NODE_VERSION }}
       uses: actions/setup-node@v1
       with:
@@ -32,6 +27,10 @@ jobs:
         npm run build --if-present
         npm run test --if-present
     - name: 'Deploy to Azure WebApp'
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZUE_CREDENTIAL_1 }}
+      
                
     # deploy web app using Azure credentials
     - uses: azure/webapps-deploy@v2
