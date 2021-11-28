@@ -64,7 +64,7 @@ server.use( `${API_PREFIX_V1}/news`, routerNews );
 server.use( `${API_PREFIX_V1}/projects`, routerProjects );
 server.use( `${API_PREFIX_V1}/products`, routerProducts );
 server.use( `${API_PREFIX_V1}/users`, routerUsers );
-server.use( `${API_PREFIX_V1}/locations`, routerBlogs );
+server.use( `${API_PREFIX_V1}/blogs`, routerBlogs );
 server.use( `${API_PREFIX_V1}/weather`, routerWeather );
 server.use( `${API_PREFIX_V1}/books`, routerBooks );
 
@@ -73,10 +73,15 @@ server.all( '/api/*', (req, res ) => {
     throw new ApiNotImplementedError( `API ${req.method} on ${req.path} not implemented!`, `Main-Bad api request` );
 });
 
+// Welcome message
+server.get( `*`, (req, res ) => {
+    res.status( 200 ).send( {message: `Welcome to NodeApp`} );
+} );
+
 // Handle GET requests not handled by Routes, send React App to Client
-server.get( '*', (req, res) => {
-    res.sendFile( path.resolve(__dirname, '../../express/src/client/index.html') );
-});
+// server.get( '*', (req, res) => {
+//     res.sendFile( path.resolve(__dirname, '../../node-project1/src/client/index.html') );
+// });
 
 // Handle All other (POST, PATCH, DELETE) requets not handled by Routes
 server.all( '*', (req, res ) => {
