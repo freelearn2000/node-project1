@@ -1,0 +1,43 @@
+name: nodeproject using service principle
+
+on: 
+   push:
+    branches:
+      - master
+env:
+  AZURE_WEBAPP_NAME: serviceappservice  
+  NODE_VERSION: '14.x'               
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+    - name: 'Checkout GitHub Action' 
+      uses: actions/checkout@main
+    - name: 'Deploy to Azure WebApp'
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZUE_CREDENTIAL_1 }}
+    - name: Use Node.js ${{ env.NODE_VERSION }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+    - name: npm install, compile
+      run: |
+        # Build and test the project, then
+        # deploy to Az.
+        npm install
+        npm run compile
+      
+               
+    # deploy web app using Azure credentials
+    - uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ env.serviceappservice }}
+        package: .
+
+    # Azure logout 
+    - name: logout
+      run: |
+        az logout
