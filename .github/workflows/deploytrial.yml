@@ -25,7 +25,7 @@ jobs:
         # Build and test the project, then
         # deploy to Azure Web App.
         npm install
-        npm 
+        npm compile
     
     - name: 'Deploy to Azure WebApp'
       uses: azure/webapps-deploy@v1
