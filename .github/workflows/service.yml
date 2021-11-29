@@ -1,6 +1,9 @@
-name: nodeproject
+name: nodeproject using service principle
 
 on: 
+   push:
+    branches:
+      - master
 
 
 env:
