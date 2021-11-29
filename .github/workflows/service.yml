@@ -1,6 +1,6 @@
 name: nodeproject
 
-on: [push]
+on: 
 
 
 env:
