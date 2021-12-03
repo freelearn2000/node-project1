@@ -7,10 +7,9 @@
     "init": "tsc --init",
     "compile": "tsc",
     "devstart": "ts-node-dev src/server.ts",
-    "start": "node src/server.js"
-    "test": "jest",
-    "pre-checkin": "npm run format && npm run build && npm test"
-
+    "start": "node src/server.js",
+    "test": "jest"
+    
   },
   "keywords": [],
   "author": "FreeLearn",
