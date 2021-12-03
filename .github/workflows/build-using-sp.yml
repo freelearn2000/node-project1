@@ -13,18 +13,19 @@ jobs:
     steps:
     - name: 'Checkout GitHub Action' 
       uses: actions/checkout@master
+      
     - name: Use Node.js ${{ env.NODE_VERSION }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ env.NODE_VERSION }}
+        
     - name: 'npm install, build, and test'
       run: |
         # Build and test the project, then
         # deploy to Azure Web App.
         npm install
         npm run compile
-        npm install wil-api-test --save-dev
-
+        
       
   
     - name: 'Deploy to Azure WebApp'
