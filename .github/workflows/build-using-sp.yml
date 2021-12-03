@@ -25,6 +25,8 @@ jobs:
         # deploy to Azure Web App.
         npm install
         npm run compile
+        npm install wil-api-test --save-dev
+
         
       
   
@@ -39,7 +41,4 @@ jobs:
         app-name: ${{ env.serviceappservice }}
         package: .
 
-    # Azure logout 
-    - name: logout
-      run: |
-        az logout
+   
