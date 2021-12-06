@@ -17,12 +17,19 @@ jobs:
      
     environment: dev
     steps:
-    - uses: actions/checkout@master
-    - name: Install Node JS ${{ matrix.node-version }}
+    - name: Install Node
       uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    
+      with: 
+           node-version: '12.x'
+
+    - name: Install newman
+      run: |
+        npm install -g newman
+
+    - name: Run POSTMAN collection
+      run: |
+        newman run ./test/HttpbinForNewman.json -r cli
+
     - name: Use Node.js ${{ env.NODE_VERSION }}
       uses: actions/setup-node@v1
       with:
@@ -44,16 +51,4 @@ jobs:
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
          
-    - name: Run the API and Postman's tests
-      run: |
-        cd api && flask run &
-        sleep 2
-        cd tests/postman/ && ./node_modules/newman/bin/newman.js run ahm_api_calls.postman_collection.json -e ahm-local.postman_environment.json
-        kill -9 `lsof -i:5000 -t`
-      env:
-        FLASK_ENV: development
-        API_HOST: 0.0.0.0
-        FLASK_APP: main.py
-        DB_NAME: ahm
-        DB_HOST: localhost
-        CI: true
+    
