@@ -20,6 +20,7 @@ jobs:
       run: |
         npm install
         make test-coverage
+        npm audit fix
 
     - name: Coveralls
       uses: coverallsapp/github-action@master
