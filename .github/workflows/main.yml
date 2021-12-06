@@ -21,6 +21,7 @@ jobs:
         npm install
         make test-coverage
         npm audit fix
+        npm fund
 
     - name: Coveralls
       uses: coverallsapp/github-action@master
