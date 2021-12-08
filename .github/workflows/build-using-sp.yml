@@ -36,7 +36,4 @@ jobs:
         app-name: ${{ env.serviceappservice }}
         package: .
 
-    # Azure logout 
-    - name: logout
-      run: |
-        az logout
+  
