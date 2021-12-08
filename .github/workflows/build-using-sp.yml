@@ -3,7 +3,7 @@ name: nodeproject using service principle
 on: [push]
 env:
   AZURE_WEBAPP_NAME: serviceappservice  # set this to your application's name
-  NODE_VERSION: '14.x'                # set this to the node version to use
+  NODE_VERSION: '14.0.0'                # set this to the node version to use
 
 jobs:
   build-and-deploy:
