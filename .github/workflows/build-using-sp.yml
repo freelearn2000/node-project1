@@ -1,6 +1,6 @@
 name: nodeproject using serviceprinciple
 
-on: [workflow_dispatch]
+on: [push]
 env:
   AZURE_WEBAPP_NAME: serviceappservice  # set this to your application's name
   AZURE_WEBAPP_PACKAGE_PATH: '.'
