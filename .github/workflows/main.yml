@@ -1,6 +1,8 @@
-on: push
-
 name: Test Coveralls
+
+
+on: [workflow_dispatch]
+
 
 jobs:
 
