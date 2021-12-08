@@ -1,6 +1,5 @@
 name: Build and Deploy using publish profile
-on:
-  push
+on: [workflow_dispatch]
     
 env:
   AZURE_WEBAPP_NAME: nodesample   # set this to your application's name
