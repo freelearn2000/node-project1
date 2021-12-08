@@ -1,9 +1,8 @@
-name: nodeproject using serviceprinciple
+name: nodeproject using service principle
 
 on: [push]
 env:
   AZURE_WEBAPP_NAME: serviceappservice  # set this to your application's name
-  AZURE_WEBAPP_PACKAGE_PATH: '.'
   NODE_VERSION: '14.x'                # set this to the node version to use
 
 jobs:
@@ -11,23 +10,19 @@ jobs:
     name: Build and Deploy
     runs-on: ubuntu-latest
     environment: dev
-    
     steps:
-    - uses: actions/checkout@master
+    - name: 'Checkout GitHub Action' 
+      uses: actions/checkout@master
     - name: Use Node.js ${{ env.NODE_VERSION }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ env.NODE_VERSION }}
-        
     - name: npm install, build, and test
       run: |
         # Build and test the project, then
         # deploy to Azure Web App.
         npm install
         npm run compile
-        npm install wil-api-test --save-dev
-
-        
       
   
     - name: 'Deploy to Azure WebApp'
@@ -41,4 +36,7 @@ jobs:
         app-name: ${{ env.serviceappservice }}
         package: .
 
-   
+    # Azure logout 
+    - name: logout
+      run: |
+        az logout
