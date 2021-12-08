@@ -1,6 +1,11 @@
-name: postman-pull-request
+name: Run Newman
 
-on: [push, pull_request] 
+on: [workflow_dispatch]
+
+env:
+  PORT: "3000"
+  STAGE: "local"
+  NODE_ENV: "develop"
 
 jobs: 
   build:
@@ -8,28 +13,20 @@ jobs:
     strategy:
       matrix:
         node-version: [12.x]
-   
-  steps:
-  - name: Check out Git repository
-    uses: actions/checkout@v1
-  - name: Set up Node.js
-    uses: actions/setup-node@v1
-    with:
-      node-version: ${{ matrix.node-version }}
-      registry-url: https://registry.npmjs.org/
-  
-  - name: Install dependencies
-    run: npm install
-  - name: Install newman
-    run: npm install -g newman
- 
-  - name: Run the API and Postman's tests
-    run: | 
-      npm run start:dev &
-      sleep 60
-      newman run "Example.postman_collection.json"
-    env:
-      
-      PORT: "3000"
-      STAGE: "local"
-      NODE_ENV: "develop"
+    steps:
+    - name: Check out Git repository
+      uses: actions/checkout@v1
+    - name: Set up Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+        registry-url: https://registry.npmjs.org/
+    - name: Install dependencies
+      run: npm install
+    - name: Install newman
+      run: npm install -g newman
+    - name: Run the API and Postman's tests
+      run: | 
+        npm run start:dev &
+        sleep 60
+        newman run "Example.postman_collection.json"
