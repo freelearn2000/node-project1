@@ -10,25 +10,10 @@ jobs:
   build-and-deploy:
     name: Build and Deploy
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [12.x]
-     
+    
     environment: dev
     steps:
-    - name: Install Node
-      uses: actions/setup-node@v1
-      with: 
-           node-version: '12.x'
-
-    - name: Install newman
-      run: |
-        npm install -g newman
-
-    - name: Run POSTMAN collection
-      run: |
-        newman run ./test/HttpbinForNewman.json -r cli
-
+   
     - name: Use Node.js ${{ env.NODE_VERSION }}
       uses: actions/setup-node@v1
       with:
