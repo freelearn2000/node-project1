@@ -1,0 +1,61 @@
+name: Build and Deploy to Azure (Service Principal)
+
+on: [workflow_dispatch]
+
+env:
+  AZURE_WEBAPP_NAME: netsample1                                     # set this to your application's name
+  AZURE_WEBAPP_URL: 'https://netsample1.azurewebsites.net'          # set application url
+  AZURE_WEBAPP_PACKAGE_PATH: '.'                                    # set this to the path to your web app project, defaults to the repository root
+  NODE_VERSION: '14.x'                                              # set this to the node version to use
+
+jobs:
+  build-and-deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+    environment: dev
+
+    steps:
+    - name: Checkout master from repository
+      uses: actions/checkout@master
+
+    - name: Login to Azure WebApp
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIAL_SP }}
+    
+    - name: Setup Node.js ${{ env.NODE_VERSION }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+
+    - name: Run npm install, compile
+      run: |
+        # Build and compile the project
+        npm install
+        npm run compile
+      
+    - name: Deploy to Azure WebApp
+      uses: azure/webapps-deploy@v1
+      with: 
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+
+    - name: Logout from Azure
+      run: |
+        az logout
+
+    - name: Check HTTP status code
+      uses: lakuapik/gh-actions-http-status@v1
+      with:
+        sites: '[${{ env.AZURE_WEBAPP_URL }}]'
+        expected: '[200]'
+
+    - name: Set failure actions
+      if: ${{ failure() }}
+      run: |
+          echo "DEPLOY_STATUS=FAILED" >> $GITHUB_ENV
+          
+    - name: Set suceess actions
+      if: ${{ success() }}
+      run: |
+          echo "DEPLOY_STATUS=SUCCESS" >> $GITHUB_ENV

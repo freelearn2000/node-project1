@@ -8,3 +8,5 @@ node_modules/
 .env
 
 error.log
+netsample1.PublishSettings
+serviceprincipal

@@ -8,7 +8,6 @@
     "compile": "tsc",
     "devstart": "ts-node-dev src/server.ts",
     "start": "node src/server.js"
-   
 },
   "keywords": [],
   "author": "FreeLearn",
