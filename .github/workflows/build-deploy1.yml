@@ -44,18 +44,16 @@ jobs:
       run: |
         az logout
 
-    - name: Check HTTP status code
-      uses: lakuapik/gh-actions-http-status@v1
+    - name: Check the Azure WebApp is running successfully
+      uses: jtalk/url-health-check-action@v2
       with:
-        sites: '[${{ env.AZURE_WEBAPP_URL }}]'
-        expected: '[200]'
-
-    - name: Set failure actions
-      if: ${{ failure() }}
-      run: |
-          echo "DEPLOY_STATUS=FAILED" >> $GITHUB_ENV
-          
-    - name: Set suceess actions
-      if: ${{ success() }}
-      run: |
-          echo "DEPLOY_STATUS=SUCCESS" >> $GITHUB_ENV
+        # Check the following URLs one by one sequentially
+        url: ${{ env.AZURE_WEBAPP_URL }}
+        # Follow redirects, or just report success on 3xx status codes
+        follow-redirect: false # Optional, defaults to "false"
+        # Fail this action after this many failed attempts
+        max-attempts: 3 # Optional, defaults to 1
+        # Delay between retries
+        retry-delay: 5s # Optional, only applicable to max-attempts > 1
+        # Retry all errors, including 404. This option might trigger curl upgrade.
+        retry-all: false # Optional, defaults to "false"
