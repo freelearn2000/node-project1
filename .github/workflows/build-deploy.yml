@@ -3,10 +3,10 @@ name: Build and Deploy to Azure (Publish Profile)
 on: [workflow_dispatch]
 
 env:
-  AZURE_WEBAPP_NAME: netsample1                                     # set this to your application's name
-  AZURE_WEBAPP_URL: 'https://netsample1.azurewebsites.net'          # set application url
-  AZURE_WEBAPP_PACKAGE_PATH: '.'                                    # set this to the path to your web app project, defaults to the repository root
-  NODE_VERSION: '14.x'                                              # set this to the node version to use
+  AZURE_WEBAPP_NAME: nodeprojectapp                                     # set this to your application's name
+  AZURE_WEBAPP_URL: 'https://nodeprojectapp.azurewebsites.net'          # set application url
+  AZURE_WEBAPP_PACKAGE_PATH: '.'                                       # set this to the path to your web app project, defaults to the repository root
+  NODE_VERSION: '14.x'                                                 # set this to the node version to use
 
 jobs:
   build-and-deploy:
